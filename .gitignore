@@ -1,3 +1,8 @@
+# моё:
+TODO_short
+# vim:
+*.s[vw]?
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
