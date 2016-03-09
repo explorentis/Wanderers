@@ -22,6 +22,7 @@ class WinMenu(WinContent):
 			self.hotkey_assign[element.hotkey] = element
 
 	def draw_element(self, line, element, is_selected=False):
+		self.window.hline(line, 1, ' ', self.winwidth - 3)
 		if is_selected:
 			self.window.addstr(line, 1, element.name, curses.A_REVERSE)
 			self.window.addstr(line, self.winwidth - 2, element.hotkey, curses.A_REVERSE | curses.color_pair(1))
@@ -58,16 +59,16 @@ class WinMenu(WinContent):
 			if self.choice > len(self.menu) - 1:
 				self.choice = 0
 			self.draw()
-			self.current_scene.conlist['description'].new_text(self.menu[self.choice].description)
-			self.current_scene.conlist['description'].draw()
+			self.current_scene.description.new_text(self.menu[self.choice].description)
+			self.current_scene.description.draw()
 
 		elif key == curses.KEY_UP:
 			self.choice -= 1
 			if self.choice == -1:
 				self.choice = len(self.menu) - 1
 			self.draw()
-			self.current_scene.conlist['description'].new_text(self.menu[self.choice].description)
-			self.current_scene.conlist['description'].draw()
+			self.current_scene.description.new_text(self.menu[self.choice].description)
+			self.current_scene.description.draw()
 
 		elif key == 10:
 			# нажатие клавиши ENTER, т.к. curses'овское определение не сработало

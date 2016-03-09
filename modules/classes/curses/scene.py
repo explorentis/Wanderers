@@ -6,22 +6,43 @@ from curses import doupdate
 class Scene(BaseClass):
 	def __init__(self, name, description='', content_list={}):
 		BaseClass.__init__(self, name, description)
-		self.conlist = {}
+		self.menu_list = []
+		self.description = None
+		self.output_list = []
+		self.menu_focus = None
+		self.output_focus = None
 		self.add_content(content_list)
-		self.conlist['description'].new_text(
-				self.conlist['menu'].menu[self.conlist['menu'].choice].description
-		)
-		for content in self.conlist:
-			self.conlist[content].draw()
 		doupdate()
 
 	
 	def add_content(self, content_list):
-		self.conlist = content_list
+		if 'menu' in content_list:
+			self.menu_list.append(content_list['menu'])
+			if self.menu_focus is None:
+				self.menu_focus = self.menu_list[0]
+			self.menu_focus.draw()
+		if 'output' in content_list:
+			self.output_list.append(content_list['output'])
+			if self.output_focus is None:
+				self.output_focus = self.output_list[0]
+			self.output_focus.draw()
+		if 'description' in content_list:
+			self.description = content_list['description']
+			self.description.new_text(
+				self.menu_focus.menu[self.menu_focus.choice].description
+			)
+			self.description.draw()
+
 		for element in content_list.values():
 			element.current_scene = self
 
+	def draw(self):
+		self.description.draw()
+		self.output_focus.draw()
+		self.menu_focus.draw()
+		doupdate()
+	
 	def step(self):
-		self.conlist['menu'].proc_presskey()
+		self.menu_focus.proc_presskey()
 		doupdate()
 

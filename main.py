@@ -5,7 +5,7 @@ import curses
 
 #WinMenu, WinContent, MenuElement, WinText, Scene:
 from modules.classes.curses import *
-from modules.methods import quit, get_want_exit, nothing
+from modules.methods import quit, get_want_exit, nothing, change_menu_focus
 
 def main(stdscr):
 	# Уровень приложения:
@@ -32,18 +32,34 @@ def main(stdscr):
 	# Уровень сцены:
 	scene1 = Scene(
 		'Главное меню', 
-		'Главное меню игры, а также генерация новой игры',
+		'Главное меню игры, а также генерация новой игры'
+	)
+
+	scene1.add_content(
 		{
-			'menu':WinMenu(menu, 'Действия',[
+			'menu':WinMenu(menu, 'Главное меню', [
 					MenuElement('t', nothing, 'Обучение', 'Начать обучение основам игры'),
 					MenuElement('n', nothing, 'Новая игра', 'Начать новую игру'),
-					MenuElement('q', quit, 'Выход', 'Выйти из игры Wanderers')
+					MenuElement('q', change_menu_focus, 'Выход', 'Выйти из игры Wanderers', {'self':scene1, 'newfocus':1})
 			]),
 		'output':WinText(output, 'Описание события'), 
 		'description':WinText(description, 'Описание данного действия')
 		}
-	)
-			
+		)
+	
+	scene1.add_content(
+		{
+		'menu':WinMenu(
+			menu, 
+			'Точно выйти?', 
+			[
+				MenuElement('y', quit, 'Да', 'Выйти из игры'),
+				MenuElement('n', change_menu_focus, 'Нет', 'Не выходить пока', {'self':scene1, 'newfocus':0})
+			]
+		)
+		}
+		)
+	
 	while not get_want_exit():
 		scene1.step()
 
