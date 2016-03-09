@@ -59,7 +59,7 @@ class WinMenu(WinContent):
 			if self.choice > len(self.menu) - 1:
 				self.choice = 0
 			self.draw()
-			self.current_scene.description.new_text(self.menu[self.choice].description)
+			self.current_scene.description.new_text(self.menu[self.choice].descr)
 			self.current_scene.description.draw()
 
 		elif key == curses.KEY_UP:
@@ -67,7 +67,7 @@ class WinMenu(WinContent):
 			if self.choice == -1:
 				self.choice = len(self.menu) - 1
 			self.draw()
-			self.current_scene.description.new_text(self.menu[self.choice].description)
+			self.current_scene.description.new_text(self.menu[self.choice].descr)
 			self.current_scene.description.draw()
 
 		elif key == 10:

@@ -16,6 +16,7 @@ def quit(**kwargs):
 # Смена меню
 def change_menu_focus(**kwargs):
 	kwargs['self'].menu_focus = kwargs['self'].menu_list[kwargs['newfocus']]
+	kwargs['self'].description.new_text(kwargs['self'].menu_focus.menu[kwargs['self'].menu_focus.choice].descr)
 	kwargs['self'].draw()
 #.
 

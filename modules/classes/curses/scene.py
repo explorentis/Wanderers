@@ -29,7 +29,7 @@ class Scene(BaseClass):
 		if 'description' in content_list:
 			self.description = content_list['description']
 			self.description.new_text(
-				self.menu_focus.menu[self.menu_focus.choice].description
+				self.menu_focus.menu[self.menu_focus.choice].descr
 			)
 			self.description.draw()
 
@@ -37,9 +37,9 @@ class Scene(BaseClass):
 			element.current_scene = self
 
 	def draw(self):
-		self.description.draw()
-		self.output_focus.draw()
 		self.menu_focus.draw()
+		self.output_focus.draw()
+		self.description.draw()
 		doupdate()
 	
 	def step(self):
